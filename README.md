@@ -1,4 +1,4 @@
-# Task Management Backend
+# # Opentech Task Management Backend Application
 
 This repository contains the backend code for a Task Management application. It is built with Node.js, Express, and MSSQL, and uses Sequelize ORM for database interactions. The core features of this backend include client management, task management, and email notifications.
 

@@ -16,17 +16,12 @@ async function createClient(req, res) {
       client_location,
     } = req.body;
 
-    // Validate client data (optional)
-    // You can add validation logic here to ensure required fields are present and data types are correct
-
-    // Define your SQL query for insertion
     const query = `
       INSERT INTO Clients (name, email, phone, company_name, preferred_contact, client_location, createdAt, updatedAt)
       OUTPUT INSERTED.id
       VALUES (@name, @email, @phone, @company_name, @preferred_contact, @client_location, GETUTCDATE(), GETUTCDATE())
     `;
 
-    // Prepare the SQL statement with parameters
     const request = pool.request();
     request.input("name", name);
     request.input("email", email);
@@ -39,7 +34,6 @@ async function createClient(req, res) {
     const result = await request.query(query);
     const newClient = result.recordset[0];
 
-    // Check if any rows were affected (i.e., client inserted successfully)
     if (newClient) {
       res
         .status(201)
@@ -59,13 +53,8 @@ async function createClient(req, res) {
 async function getClients(req, res) {
   try {
     const pool = await mssql.connect(config);
-
-    // Define your SQL query to fetch clients
     const query = "SELECT * FROM Clients";
-
-    // Execute the query
     const clients = await pool.request().query(query);
-
     res.status(200).json(clients.recordsets[0]);
   } catch (error) {
     res.status(500).json({ error: error.message });
