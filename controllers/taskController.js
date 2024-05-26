@@ -1,6 +1,7 @@
 const Task = require("../models/task");
 const mssql = require("mssql");
 const config = require("../config/config").development;
+const sendEmailNotification = require("../mailer");
 
 data = {
   title: "Feature Request",
@@ -54,7 +55,7 @@ async function createTask(req, res) {
 
     // Execute the query
     const result = await request.query(query);
-    const insertedId = result.output.id;
+    const insertedId = result.recordset[0].id;
 
     // Check if any rows were affected (i.e., task inserted successfully)
     if (result.rowsAffected[0] === 1) {
@@ -65,6 +66,25 @@ async function createTask(req, res) {
 
       const newTaskResult = await newRequest.query(newTaskQuery);
       const newTask = await newTaskResult.recordset[0];
+
+      // Get client Email query
+      const getClientEmailQuery =
+        "SELECT email,name FROM Clients WHERE id  = @client_id";
+      const emailResult = await request.query(getClientEmailQuery);
+      const clientEmail = emailResult.recordset[0].email;
+      const clientName = emailResult.recordset[0].name;
+
+      const emailInfo = {
+        clientEmail: clientEmail,
+        clientName: clientName,
+        description: description,
+        assigned_to: newTask.assigned_to,
+        status: newTask.status,
+        refNumber: insertedId,
+        category: newTask.category,
+      };
+      // Send email notification to the assigned user
+      sendEmailNotification(emailInfo);
 
       res.status(201).json({ message: "SUCCESS!", data: newTask });
     } else {
