@@ -1,0 +1,23 @@
+{
+  "development": {
+    "user": "sa",
+    "password": "P@radise2023*",
+    "database": "TaskManager",
+    "host": "localhost",
+    "dialect": "mssql"
+  },
+  "test": {
+    "user": "sa",
+    "password": "P@radise2023*",
+    "database": "TaskManager",
+    "host": "localhost",
+    "dialect": "mssql"
+  },
+  "production": {
+    "user": "sa",
+    "password": "P@radise2023*",
+    "database": "TaskManager",
+    "host": "localhost",
+    "dialect": "mssql"
+  }
+}
