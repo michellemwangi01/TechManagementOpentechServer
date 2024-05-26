@@ -58,6 +58,7 @@ This repository contains the backend code for a Task Management application. It 
 ### Email Notifications
 
 - **Send Email Notification on Task Creation**
+
   - Description: Sends an email notification to the assigned user when a new task is created.
   - Email Content:
 
@@ -118,4 +119,4 @@ This repository contains the backend code for a Task Management application. It 
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed to @Michelle Mwangi under the MIT License.
